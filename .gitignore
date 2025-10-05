@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Data (trzymaj raw w repo tylko jeśli małe)
+data/interim/
+data/processed/
+warehouse/*.duckdb
+*.parquet
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
