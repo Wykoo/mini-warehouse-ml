@@ -14,3 +14,6 @@ warehouse/*.duckdb
 
 # OS
 .DS_Store
+.env
+.minio/
+.env
