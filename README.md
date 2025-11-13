@@ -76,25 +76,33 @@ nano airflow/.env
 ## 2️⃣ Uzupełnij .env swoimi wartościami
 
 # === SECURITY ===
+```bash
 AIRFLOW__CORE__FERNET_KEY=<WSTAW_TUTAJ_FERNET_KEY>
 AIRFLOW__WEBSERVER__SECRET_KEY=<WSTAW_TUTAJ_SECRET_KEY>
+```
 
 # === AIRFLOW ADMIN ===
+```bash
 _AIRFLOW_WWW_USER_CREATE=True
 _AIRFLOW_WWW_USER_USERNAME=admin
 _AIRFLOW_WWW_USER_PASSWORD=admin123
+```
 
 # === POSTGRES CONNECTION FOR DAG ===
+```bash
 PG_HOST=host.docker.internal
 PG_PORT=5432
 PG_USER=postgres
 PG_PASSWORD=postgres
 PG_DB=warehouse
+```
 
 # === MINIO ===
+```bash
 MINIO_ROOT_USER=admin
 MINIO_ROOT_PASSWORD=admin12345
 S3_ENDPOINT=http://host.docker.internal:9000
+```
 
 ## 3️⃣ Wygeneruj klucze
 
