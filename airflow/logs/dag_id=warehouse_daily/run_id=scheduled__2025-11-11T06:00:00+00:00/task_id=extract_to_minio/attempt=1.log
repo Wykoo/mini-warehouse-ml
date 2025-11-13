@@ -1,0 +1,83 @@
+[2025-11-12T18:19:49.128+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-12T18:19:49.138+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T18:19:49.141+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T18:19:49.141+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-12T18:19:49.146+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): extract_to_minio> on 2025-11-11 06:00:00+00:00
+[2025-11-12T18:19:49.148+0000] {standard_task_runner.py:64} INFO - Started process 213 to run task
+[2025-11-12T18:19:49.149+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'extract_to_minio', 'scheduled__2025-11-11T06:00:00+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpfy1o22nw']
+[2025-11-12T18:19:49.150+0000] {standard_task_runner.py:91} INFO - Job 5: Subtask extract_to_minio
+[2025-11-12T18:19:49.167+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [running]> on host 2ab1eb6ceb27
+[2025-11-12T18:19:49.248+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='extract_to_minio' AIRFLOW_CTX_EXECUTION_DATE='2025-11-11T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-11T06:00:00+00:00'
+[2025-11-12T18:19:49.249+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-12T18:19:49.254+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-12T18:19:49.254+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'python /opt/airflow/repo/etl/extract.py']
+[2025-11-12T18:19:49.258+0000] {subprocess.py:86} INFO - Output:
+[2025-11-12T18:19:49.568+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2025-11-12T18:19:49.568+0000] {subprocess.py:93} INFO -   File "/opt/airflow/repo/etl/extract.py", line 26, in <module>
+[2025-11-12T18:19:49.568+0000] {subprocess.py:93} INFO -     upload_local_csv_to_raw("data/raw/housing_800k.csv", "housing_800k.csv")
+[2025-11-12T18:19:49.568+0000] {subprocess.py:93} INFO -   File "/opt/airflow/repo/etl/extract.py", line 18, in upload_local_csv_to_raw
+[2025-11-12T18:19:49.568+0000] {subprocess.py:93} INFO -     raise FileNotFoundError(f"Local file not found: {local}")
+[2025-11-12T18:19:49.568+0000] {subprocess.py:93} INFO - FileNotFoundError: Local file not found: data/raw/housing_800k.csv
+[2025-11-12T18:19:49.593+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2025-11-12T18:19:49.593+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-12T18:19:49.596+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2025-11-12T18:19:49.597+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=warehouse_daily, task_id=extract_to_minio, run_id=scheduled__2025-11-11T06:00:00+00:00, execution_date=20251111T060000, start_date=20251112T181949, end_date=20251112T181949
+[2025-11-12T18:19:49.602+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 5 for task extract_to_minio (Bash command failed. The command returned a non-zero exit code 1.; 213)
+[2025-11-12T18:19:49.623+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2025-11-12T18:19:49.630+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-12T18:19:49.630+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-11-12T18:37:38.129+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-12T18:37:38.138+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T18:37:38.140+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T18:37:38.140+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-12T18:37:38.144+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): extract_to_minio> on 2025-11-11 06:00:00+00:00
+[2025-11-12T18:37:38.145+0000] {standard_task_runner.py:64} INFO - Started process 184 to run task
+[2025-11-12T18:37:38.146+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'extract_to_minio', 'scheduled__2025-11-11T06:00:00+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpg0izv21o']
+[2025-11-12T18:37:38.147+0000] {standard_task_runner.py:91} INFO - Job 5: Subtask extract_to_minio
+[2025-11-12T18:37:38.159+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [running]> on host bc643d9c9001
+[2025-11-12T18:37:38.224+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='extract_to_minio' AIRFLOW_CTX_EXECUTION_DATE='2025-11-11T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-11T06:00:00+00:00'
+[2025-11-12T18:37:38.225+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-12T18:37:38.229+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-12T18:37:38.230+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/airflow/repo && python etl/extract.py']
+[2025-11-12T18:37:38.232+0000] {subprocess.py:86} INFO - Output:
+[2025-11-12T18:37:41.492+0000] {subprocess.py:93} INFO - Succesfully Uploaded data/raw/housing_800k.csv → s3://raw/housing_800k.csv  (rows=800,000)
+[2025-11-12T18:37:41.550+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-11-12T18:37:41.550+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-12T18:37:41.557+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=extract_to_minio, run_id=scheduled__2025-11-11T06:00:00+00:00, execution_date=20251111T060000, start_date=20251112T183738, end_date=20251112T183741
+[2025-11-12T18:37:41.595+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-12T18:37:41.602+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-12T18:37:41.604+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-11-12T19:05:50.269+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-12T19:05:50.279+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T19:05:50.281+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T19:05:50.281+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-12T19:05:50.285+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): extract_to_minio> on 2025-11-11 06:00:00+00:00
+[2025-11-12T19:05:50.287+0000] {standard_task_runner.py:64} INFO - Started process 182 to run task
+[2025-11-12T19:05:50.288+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'extract_to_minio', 'scheduled__2025-11-11T06:00:00+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmph3laq1t9']
+[2025-11-12T19:05:50.288+0000] {standard_task_runner.py:91} INFO - Job 5: Subtask extract_to_minio
+[2025-11-12T19:05:50.300+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [running]> on host 6561605caf49
+[2025-11-12T19:05:50.371+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='extract_to_minio' AIRFLOW_CTX_EXECUTION_DATE='2025-11-11T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-11T06:00:00+00:00'
+[2025-11-12T19:05:50.371+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-12T19:05:50.375+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-12T19:05:50.376+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/airflow/repo && python etl/extract.py']
+[2025-11-12T19:05:50.378+0000] {subprocess.py:86} INFO - Output:
+[2025-11-12T19:05:53.596+0000] {subprocess.py:93} INFO - Succesfully Uploaded data/raw/housing_800k.csv → s3://raw/housing_800k.csv  (rows=800,000)
+[2025-11-12T19:05:53.656+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-11-12T19:05:53.656+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-12T19:05:53.663+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=extract_to_minio, run_id=scheduled__2025-11-11T06:00:00+00:00, execution_date=20251111T060000, start_date=20251112T190550, end_date=20251112T190553
+[2025-11-12T19:05:53.702+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-12T19:05:53.709+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-12T19:05:53.710+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

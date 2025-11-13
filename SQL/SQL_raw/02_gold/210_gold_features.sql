@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS gold.housing_features;
+DROP TABLE IF EXISTS gold.housing_features CASCADE;
 
 CREATE TABLE gold.housing_features AS
 with features as (

@@ -1,0 +1,47 @@
+[2025-11-12T19:16:50.316+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-12T19:16:50.324+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.silver_logic_checks manual__2025-11-12T19:16:13.459317+00:00 [queued]>
+[2025-11-12T19:16:50.326+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.silver_logic_checks manual__2025-11-12T19:16:13.459317+00:00 [queued]>
+[2025-11-12T19:16:50.326+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-12T19:16:50.330+0000] {taskinstance.py:2330} INFO - Executing <Task(SQLExecuteQueryOperator): silver_logic_checks> on 2025-11-12 19:16:13.459317+00:00
+[2025-11-12T19:16:50.331+0000] {standard_task_runner.py:64} INFO - Started process 817 to run task
+[2025-11-12T19:16:50.333+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'silver_logic_checks', 'manual__2025-11-12T19:16:13.459317+00:00', '--job-id', '29', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpiozbtqee']
+[2025-11-12T19:16:50.333+0000] {standard_task_runner.py:91} INFO - Job 29: Subtask silver_logic_checks
+[2025-11-12T19:16:50.345+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.silver_logic_checks manual__2025-11-12T19:16:13.459317+00:00 [running]> on host 6561605caf49
+[2025-11-12T19:16:50.362+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='silver_logic_checks' AIRFLOW_CTX_EXECUTION_DATE='2025-11-12T19:16:13.459317+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-12T19:16:13.459317+00:00'
+[2025-11-12T19:16:50.363+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-12T19:16:50.421+0000] {sql.py:282} INFO - Executing: CREATE OR REPLACE VIEW gold.clean as
+
+select
+	*,
+	CASE
+		WHEN 
+		floor is not null and 
+		total_floors is not null AND
+		floor > total_floors 
+		THEN True
+		else False
+	end as invalid_floor_flag
+		
+FROM silver.housing_clean
+[2025-11-12T19:16:50.421+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-11-12T19:16:50.421+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-12T19:16:50.437+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-12T19:16:50.443+0000] {sql.py:495} INFO - Running statement: CREATE OR REPLACE VIEW gold.clean as
+
+select
+	*,
+	CASE
+		WHEN 
+		floor is not null and 
+		total_floors is not null AND
+		floor > total_floors 
+		THEN True
+		else False
+	end as invalid_floor_flag
+		
+FROM silver.housing_clean, parameters: None
+[2025-11-12T19:16:50.445+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-12T19:16:50.447+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=silver_logic_checks, run_id=manual__2025-11-12T19:16:13.459317+00:00, execution_date=20251112T191613, start_date=20251112T191650, end_date=20251112T191650
+[2025-11-12T19:16:50.482+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-12T19:16:50.489+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-12T19:16:50.491+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

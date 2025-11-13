@@ -1,0 +1,27 @@
+services:
+  airflow:
+    image: apache/airflow:2.9.3
+    command: standalone
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=True
+      - AIRFLOW_CONN_WAREHOUSE_PG=postgres://postgres:postgres@host.docker.internal:5432/warehouse
+      - _PIP_ADDITIONAL_REQUIREMENTS=apache-airflow-providers-postgres psycopg2-binary s3fs
+      # Przekazanie zmiennych środowiskowych do Twoich skryptów ETL
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=admin12345
+      - S3_ENDPOINT=http://host.docker.internal:9000
+      - PG_HOST=host.docker.internal
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DB=warehouse
+    volumes:
+      # Airflow będzie widzieć Twoje DAG-i i całe repo
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./:/opt/airflow/repo
+    ports:
+      - "8081:8080"
+    env_file: ./airflow/.env

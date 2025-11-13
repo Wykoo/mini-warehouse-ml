@@ -1,0 +1,41 @@
+[2025-11-12T18:29:52.873+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-12T18:29:52.882+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T18:29:52.885+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [queued]>
+[2025-11-12T18:29:52.885+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 3
+[2025-11-12T18:29:52.889+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): extract_to_minio> on 2025-11-11 06:00:00+00:00
+[2025-11-12T18:29:52.890+0000] {standard_task_runner.py:64} INFO - Started process 353 to run task
+[2025-11-12T18:29:52.891+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'extract_to_minio', 'scheduled__2025-11-11T06:00:00+00:00', '--job-id', '9', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpbv5p43nz']
+[2025-11-12T18:29:52.892+0000] {standard_task_runner.py:91} INFO - Job 9: Subtask extract_to_minio
+[2025-11-12T18:29:52.904+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.extract_to_minio scheduled__2025-11-11T06:00:00+00:00 [running]> on host 2ab1eb6ceb27
+[2025-11-12T18:29:52.966+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='extract_to_minio' AIRFLOW_CTX_EXECUTION_DATE='2025-11-11T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-11T06:00:00+00:00'
+[2025-11-12T18:29:52.967+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-12T18:29:52.971+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-12T18:29:52.971+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'python /opt/airflow/repo/etl/extract.py']
+[2025-11-12T18:29:52.974+0000] {subprocess.py:86} INFO - Output:
+[2025-11-12T18:29:53.259+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2025-11-12T18:29:53.259+0000] {subprocess.py:93} INFO -   File "/opt/airflow/repo/etl/extract.py", line 26, in <module>
+[2025-11-12T18:29:53.259+0000] {subprocess.py:93} INFO -     upload_local_csv_to_raw("data/raw/housing_800k.csv", "housing_800k.csv")
+[2025-11-12T18:29:53.259+0000] {subprocess.py:93} INFO -   File "/opt/airflow/repo/etl/extract.py", line 18, in upload_local_csv_to_raw
+[2025-11-12T18:29:53.260+0000] {subprocess.py:93} INFO -     raise FileNotFoundError(f"Local file not found: {local}")
+[2025-11-12T18:29:53.260+0000] {subprocess.py:93} INFO - FileNotFoundError: Local file not found: data/raw/housing_800k.csv
+[2025-11-12T18:29:53.283+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2025-11-12T18:29:53.283+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-12T18:29:53.285+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2025-11-12T18:29:53.286+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=warehouse_daily, task_id=extract_to_minio, run_id=scheduled__2025-11-11T06:00:00+00:00, execution_date=20251111T060000, start_date=20251112T182952, end_date=20251112T182953
+[2025-11-12T18:29:53.291+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 9 for task extract_to_minio (Bash command failed. The command returned a non-zero exit code 1.; 353)
+[2025-11-12T18:29:53.332+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2025-11-12T18:29:53.339+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-12T18:29:53.341+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

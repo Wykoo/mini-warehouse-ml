@@ -1,0 +1,85 @@
+[2025-11-12T19:11:58.951+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-12T19:11:58.959+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.silver_cast_normalize manual__2025-11-12T19:05:46.681163+00:00 [queued]>
+[2025-11-12T19:11:58.961+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.silver_cast_normalize manual__2025-11-12T19:05:46.681163+00:00 [queued]>
+[2025-11-12T19:11:58.961+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 3
+[2025-11-12T19:11:58.964+0000] {taskinstance.py:2330} INFO - Executing <Task(SQLExecuteQueryOperator): silver_cast_normalize> on 2025-11-12 19:05:46.681163+00:00
+[2025-11-12T19:11:58.966+0000] {standard_task_runner.py:64} INFO - Started process 576 to run task
+[2025-11-12T19:11:58.967+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'silver_cast_normalize', 'manual__2025-11-12T19:05:46.681163+00:00', '--job-id', '19', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpgh3347fa']
+[2025-11-12T19:11:58.968+0000] {standard_task_runner.py:91} INFO - Job 19: Subtask silver_cast_normalize
+[2025-11-12T19:11:58.980+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.silver_cast_normalize manual__2025-11-12T19:05:46.681163+00:00 [running]> on host 6561605caf49
+[2025-11-12T19:11:58.997+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='silver_cast_normalize' AIRFLOW_CTX_EXECUTION_DATE='2025-11-12T19:05:46.681163+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-12T19:05:46.681163+00:00'
+[2025-11-12T19:11:58.998+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-12T19:11:59.059+0000] {sql.py:282} INFO - Executing: create or replace view silver.housing_clean as
+	select
+	
+    replace(listing_id::text, ',', '')::BIGINT           AS listing_id,
+    NULLIF(TRIM("date"), '')::date                       AS listing_date,
+
+    CASE WHEN city IS NULL OR TRIM(city) = '' 
+         THEN NULL ELSE INITCAP(TRIM(city)) END          AS city,
+         
+    CASE WHEN district IS NULL OR TRIM(district) = '' 
+         THEN NULL ELSE INITCAP(TRIM(district)) END      AS district,
+         
+    NULLIF(TRIM(postal_code), '')                        AS postal_code,
+
+    -- liczby całkowite
+    rooms::int                                           AS rooms,
+    floor::int                                           AS floor,
+    total_floors::int                                    AS total_floors,
+    REPLACE(year_built::text, ',', '')::int                    AS year_built,
+    
+
+
+    ROUND(area_sqm::numeric, 2)::numeric(12,2)           AS area_sqm,
+    ROUND(distance_center_km::numeric, 2)::numeric(12,2) AS distance_center_km,
+
+
+    (price_sqm::numeric)::numeric(18,2)                  AS price_sqm,
+    (price_total::numeric)::numeric(18,2)                AS price_total,
+    
+	has_elevator
+
+
+from silver.housing_typed;
+[2025-11-12T19:11:59.060+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-11-12T19:11:59.060+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-12T19:11:59.076+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-12T19:11:59.082+0000] {sql.py:495} INFO - Running statement: create or replace view silver.housing_clean as
+	select
+	
+    replace(listing_id::text, ',', '')::BIGINT           AS listing_id,
+    NULLIF(TRIM("date"), '')::date                       AS listing_date,
+
+    CASE WHEN city IS NULL OR TRIM(city) = '' 
+         THEN NULL ELSE INITCAP(TRIM(city)) END          AS city,
+         
+    CASE WHEN district IS NULL OR TRIM(district) = '' 
+         THEN NULL ELSE INITCAP(TRIM(district)) END      AS district,
+         
+    NULLIF(TRIM(postal_code), '')                        AS postal_code,
+
+    -- liczby całkowite
+    rooms::int                                           AS rooms,
+    floor::int                                           AS floor,
+    total_floors::int                                    AS total_floors,
+    REPLACE(year_built::text, ',', '')::int                    AS year_built,
+    
+
+
+    ROUND(area_sqm::numeric, 2)::numeric(12,2)           AS area_sqm,
+    ROUND(distance_center_km::numeric, 2)::numeric(12,2) AS distance_center_km,
+
+
+    (price_sqm::numeric)::numeric(18,2)                  AS price_sqm,
+    (price_total::numeric)::numeric(18,2)                AS price_total,
+    
+	has_elevator
+
+
+from silver.housing_typed;, parameters: None
+[2025-11-12T19:11:59.084+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-12T19:11:59.086+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=silver_cast_normalize, run_id=manual__2025-11-12T19:05:46.681163+00:00, execution_date=20251112T190546, start_date=20251112T191158, end_date=20251112T191159
+[2025-11-12T19:11:59.122+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-12T19:11:59.130+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-12T19:11:59.131+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

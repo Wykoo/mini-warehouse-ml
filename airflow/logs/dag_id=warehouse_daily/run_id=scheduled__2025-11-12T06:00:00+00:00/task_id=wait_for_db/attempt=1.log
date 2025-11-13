@@ -1,0 +1,46 @@
+[2025-11-13T06:06:33.029+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-13T06:06:33.037+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.wait_for_db scheduled__2025-11-12T06:00:00+00:00 [queued]>
+[2025-11-13T06:06:33.039+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.wait_for_db scheduled__2025-11-12T06:00:00+00:00 [queued]>
+[2025-11-13T06:06:33.039+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-13T06:06:33.043+0000] {taskinstance.py:2330} INFO - Executing <Task(SqlSensor): wait_for_db> on 2025-11-12 06:00:00+00:00
+[2025-11-13T06:06:33.045+0000] {standard_task_runner.py:64} INFO - Started process 1244 to run task
+[2025-11-13T06:06:33.046+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'wait_for_db', 'scheduled__2025-11-12T06:00:00+00:00', '--job-id', '47', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpjy2uu5w3']
+[2025-11-13T06:06:33.047+0000] {standard_task_runner.py:91} INFO - Job 47: Subtask wait_for_db
+[2025-11-13T06:06:33.058+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.wait_for_db scheduled__2025-11-12T06:00:00+00:00 [running]> on host 6561605caf49
+[2025-11-13T06:06:33.132+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='wait_for_db' AIRFLOW_CTX_EXECUTION_DATE='2025-11-12T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-12T06:00:00+00:00'
+[2025-11-13T06:06:33.133+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-13T06:06:33.138+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-11-13T06:06:33.138+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-13T06:06:33.155+0000] {sql.py:96} INFO - Poking: SELECT 1; (with parameters None)
+[2025-11-13T06:06:33.155+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-13T06:06:33.162+0000] {sql.py:495} INFO - Running statement: SELECT 1;, parameters: None
+[2025-11-13T06:06:33.162+0000] {sql.py:504} INFO - Rows affected: 1
+[2025-11-13T06:06:33.163+0000] {base.py:294} INFO - Success criteria met. Exiting.
+[2025-11-13T06:06:33.163+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-13T06:06:33.165+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=wait_for_db, run_id=scheduled__2025-11-12T06:00:00+00:00, execution_date=20251112T060000, start_date=20251113T060633, end_date=20251113T060633
+[2025-11-13T06:06:33.188+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-13T06:06:33.196+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-13T06:06:33.198+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-11-13T09:51:48.418+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-13T09:51:48.426+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.wait_for_db scheduled__2025-11-12T06:00:00+00:00 [queued]>
+[2025-11-13T09:51:48.427+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.wait_for_db scheduled__2025-11-12T06:00:00+00:00 [queued]>
+[2025-11-13T09:51:48.427+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-13T09:51:48.431+0000] {taskinstance.py:2330} INFO - Executing <Task(SqlSensor): wait_for_db> on 2025-11-12 06:00:00+00:00
+[2025-11-13T09:51:48.432+0000] {standard_task_runner.py:64} INFO - Started process 177 to run task
+[2025-11-13T09:51:48.433+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'wait_for_db', 'scheduled__2025-11-12T06:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmp4g4xhyn3']
+[2025-11-13T09:51:48.434+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask wait_for_db
+[2025-11-13T09:51:48.446+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.wait_for_db scheduled__2025-11-12T06:00:00+00:00 [running]> on host 1e1b3e3b62cf
+[2025-11-13T09:51:48.462+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='wait_for_db' AIRFLOW_CTX_EXECUTION_DATE='2025-11-12T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-12T06:00:00+00:00'
+[2025-11-13T09:51:48.463+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-13T09:51:48.531+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-11-13T09:51:48.531+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-13T09:51:48.547+0000] {sql.py:96} INFO - Poking: SELECT 1; (with parameters None)
+[2025-11-13T09:51:48.548+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-13T09:51:48.553+0000] {sql.py:495} INFO - Running statement: SELECT 1;, parameters: None
+[2025-11-13T09:51:48.554+0000] {sql.py:504} INFO - Rows affected: 1
+[2025-11-13T09:51:48.554+0000] {base.py:294} INFO - Success criteria met. Exiting.
+[2025-11-13T09:51:48.554+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-13T09:51:48.556+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=wait_for_db, run_id=scheduled__2025-11-12T06:00:00+00:00, execution_date=20251112T060000, start_date=20251113T095148, end_date=20251113T095148
+[2025-11-13T09:51:48.580+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-13T09:51:48.589+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-13T09:51:48.590+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

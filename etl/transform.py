@@ -7,9 +7,6 @@ import pandas as pd
 import numpy as np
 
 
-# ---------------------------------------------------------------------
-# 🔧 Storage configuration (MinIO / S3)
-# ---------------------------------------------------------------------
 STORAGE = {
     "key": os.getenv("MINIO_ROOT_USER", "admin"),
     "secret": os.getenv("MINIO_ROOT_PASSWORD", "admin12345"),
