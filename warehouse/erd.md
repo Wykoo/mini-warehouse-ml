@@ -62,10 +62,10 @@ flowchart TD
     %% Gold → ML
     G3 -->|"predict_sample.py"| M1
 
-    %% Model metadata
-    M2 <--|"ml_final.py (training logs)"| G3
+    %% Model metadata (trening)
+    G3 -->|"ml_final.py (training run logs)"| M2
 
-    %% Relationships
+    %% Relationships pomocnicze
     S2 -.-> S4
     B2 -.-> S2
 ```
