@@ -1,0 +1,37 @@
+[2025-11-22T14:52:09.779+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-22T14:52:09.789+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.shap_explainer_ml manual__2025-11-22T14:37:10.885804+00:00 [queued]>
+[2025-11-22T14:52:09.791+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.shap_explainer_ml manual__2025-11-22T14:37:10.885804+00:00 [queued]>
+[2025-11-22T14:52:09.791+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 3
+[2025-11-22T14:52:09.794+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): shap_explainer_ml> on 2025-11-22 14:37:10.885804+00:00
+[2025-11-22T14:52:09.796+0000] {standard_task_runner.py:64} INFO - Started process 1841 to run task
+[2025-11-22T14:52:09.797+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'shap_explainer_ml', 'manual__2025-11-22T14:37:10.885804+00:00', '--job-id', '30', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpmmu1er5b']
+[2025-11-22T14:52:09.798+0000] {standard_task_runner.py:91} INFO - Job 30: Subtask shap_explainer_ml
+[2025-11-22T14:52:09.810+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.shap_explainer_ml manual__2025-11-22T14:37:10.885804+00:00 [running]> on host e41cc4788735
+[2025-11-22T14:52:09.888+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='shap_explainer_ml' AIRFLOW_CTX_EXECUTION_DATE='2025-11-22T14:37:10.885804+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-22T14:37:10.885804+00:00'
+[2025-11-22T14:52:09.888+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-22T14:52:09.894+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-22T14:52:09.894+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/airflow/repo && python ml/shap_explainer.py']
+[2025-11-22T14:52:09.898+0000] {subprocess.py:86} INFO - Output:
+[2025-11-22T14:52:10.313+0000] {subprocess.py:93} INFO - /opt/airflow/repo/ml/shap_explainer.py:4: FutureWarning: In the future `np.bool` will be defined as the corresponding NumPy scalar.
+[2025-11-22T14:52:10.313+0000] {subprocess.py:93} INFO -   if not hasattr(np, "bool"):
+[2025-11-22T14:52:15.347+0000] {subprocess.py:97} INFO - Command exited with return code -9
+[2025-11-22T14:52:15.349+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-22T14:52:15.356+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code -9.
+[2025-11-22T14:52:15.359+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=warehouse_daily, task_id=shap_explainer_ml, run_id=manual__2025-11-22T14:37:10.885804+00:00, execution_date=20251122T143710, start_date=20251122T145209, end_date=20251122T145215
+[2025-11-22T14:52:15.364+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 30 for task shap_explainer_ml (Bash command failed. The command returned a non-zero exit code -9.; 1841)
+[2025-11-22T14:52:15.382+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2025-11-22T14:52:15.387+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-22T14:52:15.389+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

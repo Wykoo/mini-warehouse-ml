@@ -6,7 +6,7 @@ services:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
       - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=True
       - AIRFLOW_CONN_WAREHOUSE_PG=postgres://postgres:postgres@host.docker.internal:5432/warehouse
-      - _PIP_ADDITIONAL_REQUIREMENTS=apache-airflow-providers-postgres psycopg2-binary s3fs
+      - _PIP_ADDITIONAL_REQUIREMENTS=apache-airflow-providers-postgres psycopg2-binary s3fs joblib scikit-learn xgboost pandas numpy matplotlib shap openpyxl
       # Przekazanie zmiennych środowiskowych do Twoich skryptów ETL
       - MINIO_ROOT_USER=admin
       - MINIO_ROOT_PASSWORD=admin12345

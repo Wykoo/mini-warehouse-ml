@@ -1,0 +1,189 @@
+[2025-11-14T16:42:47.065+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-14T16:42:47.073+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.gold_features manual__2025-11-14T16:42:08.384178+00:00 [queued]>
+[2025-11-14T16:42:47.075+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.gold_features manual__2025-11-14T16:42:08.384178+00:00 [queued]>
+[2025-11-14T16:42:47.075+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-14T16:42:47.079+0000] {taskinstance.py:2330} INFO - Executing <Task(SQLExecuteQueryOperator): gold_features> on 2025-11-14 16:42:08.384178+00:00
+[2025-11-14T16:42:47.081+0000] {standard_task_runner.py:64} INFO - Started process 2132 to run task
+[2025-11-14T16:42:47.082+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'gold_features', 'manual__2025-11-14T16:42:08.384178+00:00', '--job-id', '62', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpdlsscu8l']
+[2025-11-14T16:42:47.083+0000] {standard_task_runner.py:91} INFO - Job 62: Subtask gold_features
+[2025-11-14T16:42:47.094+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.gold_features manual__2025-11-14T16:42:08.384178+00:00 [running]> on host 8b16c83c8b1e
+[2025-11-14T16:42:47.168+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='gold_features' AIRFLOW_CTX_EXECUTION_DATE='2025-11-14T16:42:08.384178+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-14T16:42:08.384178+00:00'
+[2025-11-14T16:42:47.169+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-14T16:42:47.173+0000] {sql.py:282} INFO - Executing: BEGIN;
+
+DROP TABLE IF EXISTS gold.housing_features CASCADE;
+
+CREATE TABLE gold.housing_features AS
+with features as (
+	select 
+		case
+			when invalid_floor_flag = False then ROUND((floor::float/nullif(total_floors::float, 0))::numeric, 3)
+		else 0
+		end as floor_ratio,
+		(year_built/10)*10 AS decade,
+		(extract(year from CURRENT_DATE) - year_built)::int 		as building_age,
+		EXTRACT(year from listing_date)::int 						as listing_year,
+		EXTRACT(month from listing_date)::int 						as listing_month,
+		EXTRACT(day from listing_date)::int 						as listing_day,
+		to_char(listing_date,'FMDay')			         			AS listing_day_of_week,
+			
+		CASE EXTRACT(MONTH FROM listing_date)::int
+	      	WHEN 12 THEN 'Winter' 
+	      	WHEN 1 THEN 'Winter' 	
+	      	WHEN 2 THEN 'Winter'
+	      	WHEN 3  THEN 'Spring' 
+	      	WHEN 4 THEN 'Spring' 
+	      	WHEN 5 THEN 'Spring'
+	      	WHEN 6  THEN 'Summer' 
+	      	WHEN 7 THEN 'Summer' 
+	      	WHEN 8 THEN 'Summer'
+	      	ELSE 'Autumn'
+	    END AS season,
+	    
+	    CASE
+	      WHEN area_sqm IS NULL   THEN 'unknown'
+	      WHEN area_sqm < 35      THEN '<35'
+	      WHEN area_sqm < 50      THEN '35-49'
+	      WHEN area_sqm < 70      THEN '50-69'
+	      WHEN area_sqm < 100     THEN '70-99'
+	      ELSE '100+'
+	    END AS area_sqm_bucket,
+	    
+	    CASE
+	      WHEN distance_center_km IS NULL THEN 'unk'
+	      WHEN distance_center_km < 1     THEN '<1'
+	      WHEN distance_center_km < 3     THEN '1-2.9'
+	      WHEN distance_center_km < 5     THEN '3-4.9'
+	      WHEN distance_center_km < 10    THEN '5-9.9'
+	      ELSE '10+'
+	    END AS distance_km_bucket,
+	    
+	    CASE WHEN has_elevator THEN 1 ELSE 0 END      AS has_elevator_int,
+	    listing_id
+			
+	from gold.clean
+)
+select 
+gc.listing_id,
+gc.listing_date,
+f.season,
+f.listing_year,
+f.decade,
+f.listing_month,
+f.listing_day,
+f.listing_day_of_week,
+gc.city,
+gc.district,
+gc.postal_code,
+gc.rooms,
+gc.floor,
+gc.total_floors,
+f.floor_ratio,
+gc.year_built,
+f.building_age,
+gc.area_sqm,
+f.area_sqm_bucket,
+gc.distance_center_km,
+f.distance_km_bucket,
+gc.price_sqm,
+gc.price_total,
+f.has_elevator_int,
+gc.invalid_floor_flag
+
+from gold.clean gc
+JOIN features f USING (listing_id);
+
+COMMIT;
+[2025-11-14T16:42:47.173+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-11-14T16:42:47.173+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-14T16:42:47.189+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-14T16:42:47.195+0000] {sql.py:495} INFO - Running statement: BEGIN;
+
+DROP TABLE IF EXISTS gold.housing_features CASCADE;
+
+CREATE TABLE gold.housing_features AS
+with features as (
+	select 
+		case
+			when invalid_floor_flag = False then ROUND((floor::float/nullif(total_floors::float, 0))::numeric, 3)
+		else 0
+		end as floor_ratio,
+		(year_built/10)*10 AS decade,
+		(extract(year from CURRENT_DATE) - year_built)::int 		as building_age,
+		EXTRACT(year from listing_date)::int 						as listing_year,
+		EXTRACT(month from listing_date)::int 						as listing_month,
+		EXTRACT(day from listing_date)::int 						as listing_day,
+		to_char(listing_date,'FMDay')			         			AS listing_day_of_week,
+			
+		CASE EXTRACT(MONTH FROM listing_date)::int
+	      	WHEN 12 THEN 'Winter' 
+	      	WHEN 1 THEN 'Winter' 	
+	      	WHEN 2 THEN 'Winter'
+	      	WHEN 3  THEN 'Spring' 
+	      	WHEN 4 THEN 'Spring' 
+	      	WHEN 5 THEN 'Spring'
+	      	WHEN 6  THEN 'Summer' 
+	      	WHEN 7 THEN 'Summer' 
+	      	WHEN 8 THEN 'Summer'
+	      	ELSE 'Autumn'
+	    END AS season,
+	    
+	    CASE
+	      WHEN area_sqm IS NULL   THEN 'unknown'
+	      WHEN area_sqm < 35      THEN '<35'
+	      WHEN area_sqm < 50      THEN '35-49'
+	      WHEN area_sqm < 70      THEN '50-69'
+	      WHEN area_sqm < 100     THEN '70-99'
+	      ELSE '100+'
+	    END AS area_sqm_bucket,
+	    
+	    CASE
+	      WHEN distance_center_km IS NULL THEN 'unk'
+	      WHEN distance_center_km < 1     THEN '<1'
+	      WHEN distance_center_km < 3     THEN '1-2.9'
+	      WHEN distance_center_km < 5     THEN '3-4.9'
+	      WHEN distance_center_km < 10    THEN '5-9.9'
+	      ELSE '10+'
+	    END AS distance_km_bucket,
+	    
+	    CASE WHEN has_elevator THEN 1 ELSE 0 END      AS has_elevator_int,
+	    listing_id
+			
+	from gold.clean
+)
+select 
+gc.listing_id,
+gc.listing_date,
+f.season,
+f.listing_year,
+f.decade,
+f.listing_month,
+f.listing_day,
+f.listing_day_of_week,
+gc.city,
+gc.district,
+gc.postal_code,
+gc.rooms,
+gc.floor,
+gc.total_floors,
+f.floor_ratio,
+gc.year_built,
+f.building_age,
+gc.area_sqm,
+f.area_sqm_bucket,
+gc.distance_center_km,
+f.distance_km_bucket,
+gc.price_sqm,
+gc.price_total,
+f.has_elevator_int,
+gc.invalid_floor_flag
+
+from gold.clean gc
+JOIN features f USING (listing_id);
+
+COMMIT;, parameters: None
+[2025-11-14T16:42:55.307+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-14T16:42:55.309+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=gold_features, run_id=manual__2025-11-14T16:42:08.384178+00:00, execution_date=20251114T164208, start_date=20251114T164247, end_date=20251114T164255
+[2025-11-14T16:42:55.321+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-14T16:42:55.326+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-11-14T16:42:55.328+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

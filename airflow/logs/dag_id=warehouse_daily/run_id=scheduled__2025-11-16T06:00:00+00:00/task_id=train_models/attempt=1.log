@@ -1,0 +1,45 @@
+[2025-11-17T07:18:04.786+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-17T07:18:04.805+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.train_models scheduled__2025-11-16T06:00:00+00:00 [queued]>
+[2025-11-17T07:18:04.809+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.train_models scheduled__2025-11-16T06:00:00+00:00 [queued]>
+[2025-11-17T07:18:04.810+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-17T07:18:04.819+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): train_models> on 2025-11-16 06:00:00+00:00
+[2025-11-17T07:18:04.823+0000] {standard_task_runner.py:64} INFO - Started process 4825 to run task
+[2025-11-17T07:18:04.827+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'train_models', 'scheduled__2025-11-16T06:00:00+00:00', '--job-id', '96', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpvqr985wd']
+[2025-11-17T07:18:04.829+0000] {standard_task_runner.py:91} INFO - Job 96: Subtask train_models
+[2025-11-17T07:18:04.857+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.train_models scheduled__2025-11-16T06:00:00+00:00 [running]> on host 8b16c83c8b1e
+[2025-11-17T07:18:05.026+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='train_models' AIRFLOW_CTX_EXECUTION_DATE='2025-11-16T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-16T06:00:00+00:00'
+[2025-11-17T07:18:05.027+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-17T07:18:05.038+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-17T07:18:05.039+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/airflow/repo && python ml/ml_final.py']
+[2025-11-17T07:18:05.044+0000] {subprocess.py:86} INFO - Output:
+[2025-11-17T08:33:30.566+0000] {subprocess.py:93} INFO - 
+[2025-11-17T08:33:30.567+0000] {subprocess.py:93} INFO - === Trenowany model: RandomForest ===
+[2025-11-17T08:33:30.567+0000] {subprocess.py:93} INFO - Fitting 2 folds for each of 5 candidates, totalling 10 fits
+[2025-11-17T08:33:30.567+0000] {subprocess.py:93} INFO - MAE  = 5,818.97
+[2025-11-17T08:33:30.567+0000] {subprocess.py:93} INFO - RMSE = 22,080.96
+[2025-11-17T08:33:30.567+0000] {subprocess.py:93} INFO - R²   = 0.9923
+[2025-11-17T08:33:30.568+0000] {subprocess.py:93} INFO - Czas trenowania: 865.00s
+[2025-11-17T08:33:30.568+0000] {subprocess.py:93} INFO - 
+[2025-11-17T08:33:30.568+0000] {subprocess.py:93} INFO - === Trenowany model: GradientBoosting ===
+[2025-11-17T08:33:30.568+0000] {subprocess.py:93} INFO - Fitting 2 folds for each of 5 candidates, totalling 10 fits
+[2025-11-17T08:33:30.568+0000] {subprocess.py:93} INFO - MAE  = 10,379.97
+[2025-11-17T08:33:30.568+0000] {subprocess.py:93} INFO - RMSE = 24,814.04
+[2025-11-17T08:33:30.568+0000] {subprocess.py:93} INFO - R²   = 0.9903
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - Czas trenowania: 2982.15s
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - 
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - === Trenowany model: XGBRegressor ===
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - Fitting 2 folds for each of 5 candidates, totalling 10 fits
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - MAE  = 11,013.70
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - RMSE = 24,550.32
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - R²   = 0.9905
+[2025-11-17T08:33:30.569+0000] {subprocess.py:93} INFO - Czas trenowania: 668.54s
+[2025-11-17T08:33:30.570+0000] {subprocess.py:93} INFO - 
+[2025-11-17T08:33:30.570+0000] {subprocess.py:93} INFO - Zapisano metryki: artifacts/model_metrics.csv
+[2025-11-17T08:33:30.570+0000] {subprocess.py:93} INFO - Najlepszy model: RandomForest (MAE=5,818.97)
+[2025-11-17T08:33:30.570+0000] {subprocess.py:93} INFO - Zapisano pipeline do: artifacts/best_model_RandomForest.joblib
+[2025-11-17T08:33:30.731+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-11-17T08:33:30.732+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-17T08:33:30.744+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=train_models, run_id=scheduled__2025-11-16T06:00:00+00:00, execution_date=20251116T060000, start_date=20251117T071804, end_date=20251117T083330
+[2025-11-17T08:33:30.758+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-17T08:33:30.762+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-17T08:33:30.763+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

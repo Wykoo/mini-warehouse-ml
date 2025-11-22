@@ -1,0 +1,92 @@
+[2025-11-21T16:04:20.364+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-21T16:04:20.375+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-20T06:00:00+00:00 [queued]>
+[2025-11-21T16:04:20.378+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-20T06:00:00+00:00 [queued]>
+[2025-11-21T16:04:20.378+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-21T16:04:20.381+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): Model_prediction_sample> on 2025-11-20 06:00:00+00:00
+[2025-11-21T16:04:20.383+0000] {standard_task_runner.py:64} INFO - Started process 1724 to run task
+[2025-11-21T16:04:20.385+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'Model_prediction_sample', 'scheduled__2025-11-20T06:00:00+00:00', '--job-id', '27', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpztxgpvgt']
+[2025-11-21T16:04:20.385+0000] {standard_task_runner.py:91} INFO - Job 27: Subtask Model_prediction_sample
+[2025-11-21T16:04:20.398+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-20T06:00:00+00:00 [running]> on host 584e6fca837f
+[2025-11-21T16:04:20.473+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='Model_prediction_sample' AIRFLOW_CTX_EXECUTION_DATE='2025-11-20T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-20T06:00:00+00:00'
+[2025-11-21T16:04:20.473+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-21T16:04:20.477+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-21T16:04:20.477+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/airflow/repo && python ml/predict_sample.py']
+[2025-11-21T16:04:20.481+0000] {subprocess.py:86} INFO - Output:
+[2025-11-21T16:04:21.516+0000] {subprocess.py:93} INFO - /opt/airflow/repo/ml/predict_sample.py:97: DeprecationWarning: is_datetime64tz_dtype is deprecated and will be removed in a future version. Check `isinstance(dtype, pd.DatetimeTZDtype)` instead.
+[2025-11-21T16:04:21.516+0000] {subprocess.py:93} INFO -   if pd.api.types.is_datetime64tz_dtype(report_excel["scored_at"]):
+[2025-11-21T16:04:21.521+0000] {subprocess.py:93} INFO - Ładowanie modelu z: artifacts/best_model_RandomForest.joblib
+[2025-11-21T16:04:21.521+0000] {subprocess.py:93} INFO - Pobieranie mieszkań do wyceny...
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO - Liczenie predykcji...
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO - Zapisywanie predykcji do bazy...
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO - Zapisano 10 predykcji gold.housing_predictions
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO -   File "/opt/airflow/repo/ml/predict_sample.py", line 114, in <module>
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO -     main()
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO -   File "/opt/airflow/repo/ml/predict_sample.py", line 106, in main
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO -     report_excel.to_excel(excel_path, index=False)
+[2025-11-21T16:04:21.522+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.12/site-packages/pandas/core/generic.py", line 2345, in to_excel
+[2025-11-21T16:04:21.523+0000] {subprocess.py:93} INFO -     formatter.write(
+[2025-11-21T16:04:21.523+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/formats/excel.py", line 946, in write
+[2025-11-21T16:04:21.523+0000] {subprocess.py:93} INFO -     writer = ExcelWriter(  # type: ignore[abstract]
+[2025-11-21T16:04:21.523+0000] {subprocess.py:93} INFO -              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-11-21T16:04:21.523+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/excel/_openpyxl.py", line 57, in __init__
+[2025-11-21T16:04:21.523+0000] {subprocess.py:93} INFO -     from openpyxl.workbook import Workbook
+[2025-11-21T16:04:21.523+0000] {subprocess.py:93} INFO - ModuleNotFoundError: No module named 'openpyxl'
+[2025-11-21T16:04:21.595+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2025-11-21T16:04:21.596+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-21T16:04:21.599+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2025-11-21T16:04:21.601+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=warehouse_daily, task_id=Model_prediction_sample, run_id=scheduled__2025-11-20T06:00:00+00:00, execution_date=20251120T060000, start_date=20251121T160420, end_date=20251121T160421
+[2025-11-21T16:04:21.605+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 27 for task Model_prediction_sample (Bash command failed. The command returned a non-zero exit code 1.; 1724)
+[2025-11-21T16:04:21.609+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2025-11-21T16:04:21.612+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-21T16:04:21.612+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-11-21T16:19:53.362+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-21T16:19:53.370+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-20T06:00:00+00:00 [queued]>
+[2025-11-21T16:19:53.372+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-20T06:00:00+00:00 [queued]>
+[2025-11-21T16:19:53.372+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-21T16:19:53.376+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): Model_prediction_sample> on 2025-11-20 06:00:00+00:00
+[2025-11-21T16:19:53.378+0000] {standard_task_runner.py:64} INFO - Started process 1705 to run task
+[2025-11-21T16:19:53.379+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'Model_prediction_sample', 'scheduled__2025-11-20T06:00:00+00:00', '--job-id', '27', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpov3bcyk4']
+[2025-11-21T16:19:53.380+0000] {standard_task_runner.py:91} INFO - Job 27: Subtask Model_prediction_sample
+[2025-11-21T16:19:53.392+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-20T06:00:00+00:00 [running]> on host 4e64c7378c33
+[2025-11-21T16:19:53.474+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='Model_prediction_sample' AIRFLOW_CTX_EXECUTION_DATE='2025-11-20T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-20T06:00:00+00:00'
+[2025-11-21T16:19:53.474+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-21T16:19:53.478+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-21T16:19:53.479+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/airflow/repo && python ml/predict_sample.py']
+[2025-11-21T16:19:53.481+0000] {subprocess.py:86} INFO - Output:
+[2025-11-21T16:19:54.410+0000] {subprocess.py:93} INFO - /opt/airflow/repo/ml/predict_sample.py:97: DeprecationWarning: is_datetime64tz_dtype is deprecated and will be removed in a future version. Check `isinstance(dtype, pd.DatetimeTZDtype)` instead.
+[2025-11-21T16:19:54.411+0000] {subprocess.py:93} INFO -   if pd.api.types.is_datetime64tz_dtype(report_excel["scored_at"]):
+[2025-11-21T16:19:54.488+0000] {subprocess.py:93} INFO - Ładowanie modelu z: artifacts/best_model_RandomForest.joblib
+[2025-11-21T16:19:54.488+0000] {subprocess.py:93} INFO - Pobieranie mieszkań do wyceny...
+[2025-11-21T16:19:54.489+0000] {subprocess.py:93} INFO - Liczenie predykcji...
+[2025-11-21T16:19:54.490+0000] {subprocess.py:93} INFO - Zapisywanie predykcji do bazy...
+[2025-11-21T16:19:54.491+0000] {subprocess.py:93} INFO - Zapisano 10 predykcji gold.housing_predictions
+[2025-11-21T16:19:54.492+0000] {subprocess.py:93} INFO - Zapisano raport do Excela → artifacts/predictions_20251121_1619.xlsx
+[2025-11-21T16:19:54.493+0000] {subprocess.py:93} INFO - Podgląd 5 wierszy:
+[2025-11-21T16:19:54.494+0000] {subprocess.py:93} INFO -    listing_id listing_date  ...         diff  diff_pct
+[2025-11-21T16:19:54.494+0000] {subprocess.py:93} INFO - 0      360273   2023-10-26  ... -2859.737551     -0.68
+[2025-11-21T16:19:54.495+0000] {subprocess.py:93} INFO - 1      637386   2023-11-14  ...  5008.599827      0.60
+[2025-11-21T16:19:54.496+0000] {subprocess.py:93} INFO - 2      620510   2024-04-19  ... -3144.409050     -1.05
+[2025-11-21T16:19:54.497+0000] {subprocess.py:93} INFO - 3      606170   2024-10-08  ...  9313.929893      2.11
+[2025-11-21T16:19:54.498+0000] {subprocess.py:93} INFO - 4      319035   2024-06-26  ...  2364.478888      0.25
+[2025-11-21T16:19:54.498+0000] {subprocess.py:93} INFO - 
+[2025-11-21T16:19:54.498+0000] {subprocess.py:93} INFO - [5 rows x 30 columns]
+[2025-11-21T16:19:54.569+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-11-21T16:19:54.569+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-21T16:19:54.576+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=Model_prediction_sample, run_id=scheduled__2025-11-20T06:00:00+00:00, execution_date=20251120T060000, start_date=20251121T161953, end_date=20251121T161954
+[2025-11-21T16:19:54.591+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-21T16:19:54.596+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-21T16:19:54.596+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

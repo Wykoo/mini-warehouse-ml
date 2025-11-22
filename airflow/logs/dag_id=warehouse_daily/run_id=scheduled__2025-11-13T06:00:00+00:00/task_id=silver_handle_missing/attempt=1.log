@@ -1,0 +1,139 @@
+[2025-11-14T07:10:15.992+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-14T07:10:16.002+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.silver_handle_missing scheduled__2025-11-13T06:00:00+00:00 [queued]>
+[2025-11-14T07:10:16.005+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.silver_handle_missing scheduled__2025-11-13T06:00:00+00:00 [queued]>
+[2025-11-14T07:10:16.005+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-14T07:10:16.010+0000] {taskinstance.py:2330} INFO - Executing <Task(SQLExecuteQueryOperator): silver_handle_missing> on 2025-11-13 06:00:00+00:00
+[2025-11-14T07:10:16.012+0000] {standard_task_runner.py:64} INFO - Started process 1058 to run task
+[2025-11-14T07:10:16.013+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'silver_handle_missing', 'scheduled__2025-11-13T06:00:00+00:00', '--job-id', '29', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmplpfxi3xt']
+[2025-11-14T07:10:16.014+0000] {standard_task_runner.py:91} INFO - Job 29: Subtask silver_handle_missing
+[2025-11-14T07:10:16.030+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.silver_handle_missing scheduled__2025-11-13T06:00:00+00:00 [running]> on host 8b16c83c8b1e
+[2025-11-14T07:10:16.118+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='silver_handle_missing' AIRFLOW_CTX_EXECUTION_DATE='2025-11-13T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-13T06:00:00+00:00'
+[2025-11-14T07:10:16.119+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-14T07:10:16.124+0000] {sql.py:282} INFO - Executing: create or replace view silver.housing_typed as
+WITH src AS (     
+  SELECT
+    listing_id,
+    date,
+    city,
+    district,
+    postal_code,
+    NULLIF(REPLACE(rooms::text,              ',', ''), '')::numeric                 AS rooms_num,
+    NULLIF(REPLACE(area_sqm::text,           ',', ''), '')::numeric                 AS area_num,
+    NULLIF(REPLACE(floor::text,              ',', ''), '')::numeric                 AS floor_num,
+    NULLIF(REPLACE(total_floors::text,       ',', ''), '')::numeric                 AS total_floors_num,
+    NULLIF(REPLACE(year_built::text,         ',', ''), '')::numeric                 AS year_num,
+    NULLIF(REPLACE(distance_center_km::text, ',', ''), '')::numeric                 AS dist_num,
+    CASE
+      WHEN has_elevator IS NULL THEN NULL
+      WHEN has_elevator::int = 1 THEN 1
+      WHEN has_elevator::int = 0 THEN 0
+      ELSE NULL
+    END AS has_elevator_int,
+    price_sqm,
+    price_total
+  FROM bronze.housing_raw
+),
+median_calc AS(
+	select
+		PERCENTILE_CONT(0.5) within group (order by rooms_num) as median_rooms,
+		PERCENTILE_CONT(0.5) within group (order by area_num) as median_area,
+		PERCENTILE_CONT(0.5) within group (order by floor_num) as median_floors,
+		PERCENTILE_CONT(0.5) within group (order by total_floors_num) as median_floors_total,
+		PERCENTILE_CONT(0.5) within group (order by year_num) as median_year,
+		PERCENTILE_CONT(0.5) within group (order by dist_num) as median_distance
+	from src
+)
+SELECT
+  s.listing_id,
+  s.date,
+  s.city,
+  s.district,
+  COALESCE(s.rooms_num,            m.median_rooms)        AS rooms,             
+  COALESCE(s.area_num,             m.median_area)         AS area_sqm,          
+  COALESCE(s.floor_num,            m.median_floors)        AS floor,             
+  COALESCE(s.total_floors_num,     m.median_floors_total) AS total_floors,      
+  COALESCE(s.year_num,             m.median_year)         AS year_built,        
+  COALESCE(s.dist_num,             m.median_distance)         AS distance_center_km,
+  COALESCE(
+    CASE WHEN s.has_elevator_int = 1 THEN TRUE
+         WHEN s.has_elevator_int = 0 THEN FALSE
+         ELSE NULL END,
+    TRUE  
+  ) AS has_elevator,
+  s.postal_code,
+  s.price_sqm,
+  s.price_total
+FROM src s
+CROSS JOIN median_calc m;
+
+
+
+
+[2025-11-14T07:10:16.124+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-11-14T07:10:16.125+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-14T07:10:16.142+0000] {base.py:84} INFO - Using connection ID 'warehouse_pg' for task execution.
+[2025-11-14T07:10:16.150+0000] {sql.py:495} INFO - Running statement: create or replace view silver.housing_typed as
+WITH src AS (     
+  SELECT
+    listing_id,
+    date,
+    city,
+    district,
+    postal_code,
+    NULLIF(REPLACE(rooms::text,              ',', ''), '')::numeric                 AS rooms_num,
+    NULLIF(REPLACE(area_sqm::text,           ',', ''), '')::numeric                 AS area_num,
+    NULLIF(REPLACE(floor::text,              ',', ''), '')::numeric                 AS floor_num,
+    NULLIF(REPLACE(total_floors::text,       ',', ''), '')::numeric                 AS total_floors_num,
+    NULLIF(REPLACE(year_built::text,         ',', ''), '')::numeric                 AS year_num,
+    NULLIF(REPLACE(distance_center_km::text, ',', ''), '')::numeric                 AS dist_num,
+    CASE
+      WHEN has_elevator IS NULL THEN NULL
+      WHEN has_elevator::int = 1 THEN 1
+      WHEN has_elevator::int = 0 THEN 0
+      ELSE NULL
+    END AS has_elevator_int,
+    price_sqm,
+    price_total
+  FROM bronze.housing_raw
+),
+median_calc AS(
+	select
+		PERCENTILE_CONT(0.5) within group (order by rooms_num) as median_rooms,
+		PERCENTILE_CONT(0.5) within group (order by area_num) as median_area,
+		PERCENTILE_CONT(0.5) within group (order by floor_num) as median_floors,
+		PERCENTILE_CONT(0.5) within group (order by total_floors_num) as median_floors_total,
+		PERCENTILE_CONT(0.5) within group (order by year_num) as median_year,
+		PERCENTILE_CONT(0.5) within group (order by dist_num) as median_distance
+	from src
+)
+SELECT
+  s.listing_id,
+  s.date,
+  s.city,
+  s.district,
+  COALESCE(s.rooms_num,            m.median_rooms)        AS rooms,             
+  COALESCE(s.area_num,             m.median_area)         AS area_sqm,          
+  COALESCE(s.floor_num,            m.median_floors)        AS floor,             
+  COALESCE(s.total_floors_num,     m.median_floors_total) AS total_floors,      
+  COALESCE(s.year_num,             m.median_year)         AS year_built,        
+  COALESCE(s.dist_num,             m.median_distance)         AS distance_center_km,
+  COALESCE(
+    CASE WHEN s.has_elevator_int = 1 THEN TRUE
+         WHEN s.has_elevator_int = 0 THEN FALSE
+         ELSE NULL END,
+    TRUE  
+  ) AS has_elevator,
+  s.postal_code,
+  s.price_sqm,
+  s.price_total
+FROM src s
+CROSS JOIN median_calc m;
+
+
+
+, parameters: None
+[2025-11-14T07:10:16.159+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-14T07:10:16.161+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=silver_handle_missing, run_id=scheduled__2025-11-13T06:00:00+00:00, execution_date=20251113T060000, start_date=20251114T071016, end_date=20251114T071016
+[2025-11-14T07:10:16.205+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-14T07:10:16.213+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-14T07:10:16.213+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

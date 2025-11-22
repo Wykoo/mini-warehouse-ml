@@ -83,8 +83,24 @@ with DAG(
         conn_id="warehouse_pg",
         sql="SQL_raw/02_gold/220_gold_valid.sql",
     )
-
+    train_models = BashOperator(
+        task_id="train_models",
+        bash_command=f"cd {REPO} && python ml/ml_final.py",
+    )
+    feature_importance = BashOperator(
+        task_id="feature_importance_ml",
+        bash_command=f"cd {REPO} && python ml/feature_importance.py"
+    )
+    shap_explainer = BashOperator(
+        task_id="shap_explainer_ml",
+        bash_command=f"cd {REPO} && python ml/shap_explainer.py"
+    )
+    Model_prediction = BashOperator(
+        task_id="Model_prediction_sample",
+        bash_command=f"cd {REPO} && python ml/predict_sample.py"
+    )
     # Przepływ
     wait_db >> extract_to_minio >> transform_to_parquet >> load_processed_to_pg
     load_processed_to_pg >> [silver_handle_missing, silver_cast_normalize] >> silver_logic_checks
-    silver_logic_checks >> gold_features >> gold_valid
+    silver_logic_checks >> gold_features >> gold_valid >> train_models >> feature_importance >> shap_explainer 
+    shap_explainer >> Model_prediction

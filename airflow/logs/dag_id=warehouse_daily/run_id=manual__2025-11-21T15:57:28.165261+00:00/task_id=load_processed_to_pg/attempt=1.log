@@ -1,0 +1,21 @@
+[2025-11-21T15:58:10.587+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-21T15:58:10.598+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.load_processed_to_pg manual__2025-11-21T15:57:28.165261+00:00 [queued]>
+[2025-11-21T15:58:10.600+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.load_processed_to_pg manual__2025-11-21T15:57:28.165261+00:00 [queued]>
+[2025-11-21T15:58:10.600+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-21T15:58:10.603+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): load_processed_to_pg> on 2025-11-21 15:57:28.165261+00:00
+[2025-11-21T15:58:10.605+0000] {standard_task_runner.py:64} INFO - Started process 417 to run task
+[2025-11-21T15:58:10.607+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'load_processed_to_pg', 'manual__2025-11-21T15:57:28.165261+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmp4kjxn6co']
+[2025-11-21T15:58:10.607+0000] {standard_task_runner.py:91} INFO - Job 10: Subtask load_processed_to_pg
+[2025-11-21T15:58:10.620+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.load_processed_to_pg manual__2025-11-21T15:57:28.165261+00:00 [running]> on host 584e6fca837f
+[2025-11-21T15:58:10.693+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='load_processed_to_pg' AIRFLOW_CTX_EXECUTION_DATE='2025-11-21T15:57:28.165261+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-21T15:57:28.165261+00:00'
+[2025-11-21T15:58:10.693+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-21T15:58:10.697+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-21T15:58:10.698+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'python /opt/airflow/repo/etl/load.py']
+[2025-11-21T15:58:10.701+0000] {subprocess.py:86} INFO - Output:
+[2025-11-21T15:58:32.337+0000] {subprocess.py:93} INFO -  Loaded to Postgres public.housing
+[2025-11-21T15:58:32.429+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-11-21T15:58:32.429+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-21T15:58:32.437+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=load_processed_to_pg, run_id=manual__2025-11-21T15:57:28.165261+00:00, execution_date=20251121T155728, start_date=20251121T155810, end_date=20251121T155832
+[2025-11-21T15:58:32.453+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-21T15:58:32.460+0000] {taskinstance.py:3503} INFO - 2 downstream tasks scheduled from follow-on schedule check
+[2025-11-21T15:58:32.462+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
