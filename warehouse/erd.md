@@ -61,12 +61,12 @@ flowchart TD
 Warstwa BRONZE zawiera dane „as-is”, w formie najbardziej zbliżonej do źródła, bez walidacji i bez typowania.
 
 Zawartość:
-	•	bronze.housing_raw
+- bronze.housing_raw
 
 Cechy:
-	•	✔ brak typów
-	•	✔ brak walidacji
-	•	✔ pełne dane surowe
+- ✔ brak typów
+- ✔ brak walidacji
+- ✔ pełne dane surowe
 
 ## Silver — Clean Layer
 
