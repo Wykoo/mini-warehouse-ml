@@ -73,14 +73,14 @@ Cechy:
 Warstwa SILVER zawiera dane oczyszczone, otagowane typami oraz gotowe do dalszego wzbogacania.
 
 Zawartość (views):
-	•	silver.housing_clean — dane po walidacji, usunięte wartości błędne
-	•	silver.housing_typed — ujednolicone typy, poprawione formaty dat/liczb
+- silver.housing_clean — dane po walidacji, usunięte wartości błędne
+- silver.housing_typed — ujednolicone typy, poprawione formaty dat/liczb
 
 Cechy transformacji:
-	•	usuwanie błędnych rekordów
-	•	konwersja typów
-	•	normalizacja kolumn
-	•	wstępne łączenie danych
+- usuwanie błędnych rekordów
+- konwersja typów
+- normalizacja kolumn
+- wstępne łączenie danych
 
 ##  Gold — Feature Layer (Analytics-Ready)
 
@@ -111,11 +111,11 @@ ml.housing_predictions
 Tabela z wynikami predykcji wygenerowanymi przez model ML z pipeline’u:
 
 Zawiera kolumny:
-	- listing_id
-	- predicted_price_total
-	- scored_at
-	- model_path
-	- diff_real_vs_pred 
+- listing_id
+- predicted_price_total
+- scored_at
+- model_path
+- diff_real_vs_pred 
 
 Tworzone przez skrypt:
 
@@ -128,12 +128,12 @@ ml.model_runs
 Logi każdego treningu modelu:
 
 Zawiera:
-	- run_id
-	- model_name
-	- mae, rmse, r2
-	- train_rows, valid_rows
-	- scored_at
-	- pipeline_sha (hash modelu — kontrola wersji)
+- run_id
+- model_name
+- mae, rmse, r2
+- train_rows, valid_rows
+- scored_at
+- pipeline_sha (hash modelu — kontrola wersji)
 
 Tworzone przez skrypt:
 
