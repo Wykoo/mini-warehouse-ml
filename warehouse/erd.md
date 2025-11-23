@@ -1,4 +1,4 @@
-# 🏗️ Mini Warehouse ML – Data Warehouse & ML Pipeline
+# Mini Warehouse ML – Data Warehouse & ML Pipeline
 
 Poniższy dokument przedstawia pełną architekturę hurtowni danych oraz pipeline ML projektu **Mini Warehouse ML**.
 
@@ -10,53 +10,54 @@ wraz z przepływem danych, walidacją, trenowaniem modeli i generowaniem predykc
 
 ---
 
-# 📊 ERD – Zależności między tabelami (Mermaid)
+# ERD – Zależności między tabelami (Mermaid)
 
 ```mermaid
 flowchart TD
 
-%% =======================
-%%      BRONZE
-%% =======================
-subgraph BRONZE ["Bronze Layer – Raw Data"]
+  %% ---------- BRONZE ----------
+  subgraph BRONZE["Bronze – Raw Layer"]
     B1["bronze.housing_raw"]
-end
+  end
 
-%% =======================
-%%      SILVER
-%% =======================
-subgraph SILVER ["Silver Layer – Clean & Typed"]
-    S1["silver.housing_clean"]
-    S2["silver.housing_typed"]
-end
+  %% ---------- SILVER ----------
+  subgraph SILVER["Silver – Clean Layer (views)"]
+    S1["silver.housing_typed"]
+    S2["silver.housing_clean"]
+  end
 
-%% =======================
-%%      GOLD
-%% =======================
-subgraph GOLD ["Gold Layer – Final ML Dataset"]
-    G1["gold.housing_valid"]
-end
+  %% ---------- GOLD ----------
+  subgraph GOLD["Gold – Analytics / Features"]
+    G1["gold.housing_features"]
+    G2["gold.outliers_iqr"]
+    G3["gold.price_city_daily"]
+    GV1["gold.clean (view)"]
+    GV2["gold.housing_valid (view)"]
+  end
 
-%% =======================
-%%      ML
-%% =======================
-subgraph ML ["ML Layer – Predictions & Metadata"]
+  %% ---------- ML ----------
+  subgraph ML["ML – Predictions & Runs"]
     M1["ml.housing_predictions"]
     M2["ml.model_runs"]
-end
+  end
 
-%% FLOWS
-B1 --> S1
-S1 --> S2
-S2 --> G1
+  %% ---------- FLOWS ----------
+  B1 --> S1
+  S1 --> S2
+  S2 --> G1
 
-G1 --> M1
-G1 --> M2
+  G1 --> G2
+  G1 --> G3
+  G1 --> GV1
+  GV1 --> GV2
+
+  GV2 -->|predict_sample.py| M1
+  GV2 -->|ml_final.py| M2
 ```
 
 ## 📦 Warstwy hurtowni danych
 
-### 🔹 Bronze — Raw Layer
+### Bronze — Raw Layer
 
 Zawiera dane w formie najbardziej zbliżonej do źródła.
 • bronze.raw_listings
@@ -67,7 +68,7 @@ Zawiera dane w formie najbardziej zbliżonej do źródła.
 ✔ brak typowania
 ✔ struktura “as-is”
 
-### 🔸 Silver — Clean Layer
+### Silver — Clean Layer
 
 Dane po transformacji:
 • usunięte wartości błędne
@@ -75,14 +76,14 @@ Dane po transformacji:
 • normalizacja kolumn
 • łączenie danych z kilku źródeł (listings_enriched)
 
-### 🟡 Gold — Feature Layer
+### Gold — Feature Layer
 
 Warstwa używana do analiz i ML:
 • housing_base — agregacje i dane końcowe
 • housing_features — wszystkie cechy numeryczne & kategoryczne
 • housing_valid — ostateczny zbiór treningowy / walidacyjny
 
-### 🟢 ML — Model Predictions & Metadata
+### ML — Model Predictions & Metadata
 
 ml.housing_predictions
 Zawiera predykcje wygenerowane przez model:
@@ -113,7 +114,7 @@ Tworzone przez skrypt:
 python ml/ml_final.py
 ```
 
-### 🚀 Pipeline ML – skrót działania
+### Pipeline ML – skrót działania
 
     1.	Feature engineering (gold_features w Airflow)
     2.	Walidacja (gold_valid)
@@ -125,7 +126,7 @@ python ml/ml_final.py
     8.	Generowanie predykcji na nowych danych
     9.	Zapis predykcji do DB + Excel
 
-### 📂 Struktura katalogów projektu
+### Struktura katalogów projektu
 
 ```bash
 mini-warehouse-ml/
