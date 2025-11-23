@@ -54,9 +54,9 @@ flowchart TD
   GV2 -->|predict_sample.py| M1
   GV2 -->|ml_final.py| M2
 ```
-## Warstwy hurtowni danych
+# Warstwy hurtowni danych
 
-### Bronze — Raw Layer
+## Bronze — Raw Layer
 
 Warstwa BRONZE zawiera dane „as-is”, w formie najbardziej zbliżonej do źródła, bez walidacji i bez typowania.
 
@@ -68,7 +68,7 @@ Cechy:
 	•	✔ brak walidacji
 	•	✔ pełne dane surowe
 
-### Silver — Clean Layer
+## Silver — Clean Layer
 
 Warstwa SILVER zawiera dane oczyszczone, otagowane typami oraz gotowe do dalszego wzbogacania.
 
@@ -82,12 +82,12 @@ Cechy transformacji:
 	•	normalizacja kolumn
 	•	wstępne łączenie danych
 
-###  Gold — Feature Layer (Analytics-Ready)
+##  Gold — Feature Layer (Analytics-Ready)
 
 Warstwa GOLD to finalne, przetworzone dane do analityki i modelowania ML.
 Zawiera zarówno tabele obliczeniowe, jak i widoki, które łączą wszystkie elementy w spójny zestaw danych.\
 
-#### Tabele
+### Tabele
 
   •	gold.housing_features
 → pełny zestaw cech numerycznych i kategorycznych dla ML
@@ -96,7 +96,7 @@ Zawiera zarówno tabele obliczeniowe, jak i widoki, które łączą wszystkie el
 	•	gold.price_city_daily
 → dzienne agregacje cen dla miast (analiza trendów)
 
-#### Views
+### Views
 
   •	gold.clean
 → widok z oczyszczonymi i połączonymi danymi z warstwy silver + cechy z gold
@@ -153,7 +153,7 @@ python ml/ml_final.py
     8.	Generowanie predykcji na nowych danych
     9.	Zapis predykcji do DB + Excel
 
-### Podusmowanie warstw
+## Podusmowanie warstw
 
 | Warstwa | Typ     | Obiekty                                         | Cel                               |
 |---------|---------|--------------------------------------------------|-----------------------------------|
@@ -163,7 +163,7 @@ python ml/ml_final.py
 | Gold    | widoki  | clean, housing_valid                            | finalne dane do ML                |
 | ML      | tabele  | housing_predictions, model_runs                 | predykcje i metadane modeli       |
 
-### Struktura katalogów projektu
+## Struktura katalogów projektu
 
 ```bash
 mini-warehouse-ml/
