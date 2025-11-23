@@ -54,44 +54,68 @@ flowchart TD
   GV2 -->|predict_sample.py| M1
   GV2 -->|ml_final.py| M2
 ```
-
-## 📦 Warstwy hurtowni danych
+## Warstwy hurtowni danych
 
 ### Bronze — Raw Layer
 
-Zawiera dane w formie najbardziej zbliżonej do źródła.
-• bronze.raw_listings
-• bronze.raw_agents
-• bronze.raw_locations
+Warstwa BRONZE zawiera dane „as-is”, w formie najbardziej zbliżonej do źródła, bez walidacji i bez typowania.
 
-✔ brak walidacji
-✔ brak typowania
-✔ struktura “as-is”
+Zawartość:
+	•	bronze.housing_raw
+
+Cechy:
+	•	✔ brak typów
+	•	✔ brak walidacji
+	•	✔ pełne dane surowe
 
 ### Silver — Clean Layer
 
-Dane po transformacji:
-• usunięte wartości błędne
-• poprawione typy
-• normalizacja kolumn
-• łączenie danych z kilku źródeł (listings_enriched)
+Warstwa SILVER zawiera dane oczyszczone, otagowane typami oraz gotowe do dalszego wzbogacania.
 
-### Gold — Feature Layer
+Zawartość (views):
+	•	silver.housing_clean — dane po walidacji, usunięte wartości błędne
+	•	silver.housing_typed — ujednolicone typy, poprawione formaty dat/liczb
 
-Warstwa używana do analiz i ML:
-• housing_base — agregacje i dane końcowe
-• housing_features — wszystkie cechy numeryczne & kategoryczne
-• housing_valid — ostateczny zbiór treningowy / walidacyjny
+Cechy transformacji:
+	•	usuwanie błędnych rekordów
+	•	konwersja typów
+	•	normalizacja kolumn
+	•	wstępne łączenie danych
+
+###  Gold — Feature Layer (Analytics-Ready)
+
+Warstwa GOLD to finalne, przetworzone dane do analityki i modelowania ML.
+Zawiera zarówno tabele obliczeniowe, jak i widoki, które łączą wszystkie elementy w spójny zestaw danych.\
+
+#### Tabele
+
+  •	gold.housing_features
+→ pełny zestaw cech numerycznych i kategorycznych dla ML
+	•	gold.outliers_iqr
+→ obliczenia statystyczne IQR, wykorzystywane do walidacji outlierów
+	•	gold.price_city_daily
+→ dzienne agregacje cen dla miast (analiza trendów)
+
+#### Views
+
+  •	gold.clean
+→ widok z oczyszczonymi i połączonymi danymi z warstwy silver + cechy z gold
+	•	gold.housing_valid
+→ finalny zbiór treningowy
+→ wykorzystywany w ml_final.py i predict_sample.py
 
 ### ML — Model Predictions & Metadata
 
 ml.housing_predictions
-Zawiera predykcje wygenerowane przez model:
-• listing_id
-• predicted_price_total
-• scored_at
-• model_path
-• diff_real_vs_pred (opcjonalnie)
+
+Tabela z wynikami predykcji wygenerowanymi przez model ML z pipeline’u:
+
+Zawiera kolumny:
+	•	listing_id
+	•	predicted_price_total
+	•	scored_at
+	•	model_path
+	•	diff_real_vs_pred 
 
 Tworzone przez skrypt:
 
@@ -99,14 +123,17 @@ Tworzone przez skrypt:
 python ml/predict_sample.py
 ```
 
-**gold.model_runs**
-Log każdego treningu:
-• run_id
-• model_name
-• mae, rmse, r2
-• train_rows, valid_rows
-• scored_at
-• pipeline_sha (hash pliku modelu)
+ml.model_runs
+
+Logi każdego treningu modelu:
+
+Zawiera:
+	•	run_id
+	•	model_name
+	•	mae, rmse, r2
+	•	train_rows, valid_rows
+	•	scored_at
+	•	pipeline_sha (hash modelu — kontrola wersji)
 
 Tworzone przez skrypt:
 
@@ -125,6 +152,16 @@ python ml/ml_final.py
     7.	Zapis wyników do ml.model_runs
     8.	Generowanie predykcji na nowych danych
     9.	Zapis predykcji do DB + Excel
+
+### Podusmowanie warstw
+
+| Warstwa | Typ     | Obiekty                                         | Cel                               |
+|---------|---------|--------------------------------------------------|-----------------------------------|
+| Bronze  | tabela  | housing_raw                                     | dane surowe, źródłowe             |
+| Silver  | widoki  | housing_clean, housing_typed                    | czyszczenie, typowanie            |
+| Gold    | tabele  | housing_features, outliers_iqr, price_city_daily | cechy, agregacje, statystyki      |
+| Gold    | widoki  | clean, housing_valid                            | finalne dane do ML                |
+| ML      | tabele  | housing_predictions, model_runs                 | predykcje i metadane modeli       |
 
 ### Struktura katalogów projektu
 
