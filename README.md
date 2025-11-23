@@ -21,17 +21,18 @@ Całość jest zaprojektowana jako **portfolio-quality project**.
 3. [Warstwy hurtowni danych](#warstwy-hurtowni-danych)
 4. [ERD – zależności między tabelami (Mermaid)](#erd--zależności-między-tabelami-mermaid)
 5. [Setup – środowisko lokalne](#setup--środowisko-lokalne)
-   - [Krok 1 – plik `.env`](#krok-1--plik-env)
-   - [Krok 2 – generowanie kluczy](#krok-2--generowanie-kluczy)
-   - [Krok 3 – uruchomienie Docker Compose](#krok-3--uruchomienie-docker-compose)
-6. [DAG Airflow – warehouse_daily](#dag-airflow--warehouse_daily)
-7. [Warstwa ML – trenowanie modeli i predykcje](#warstwa-ml--trenowanie-modeli-i-predykcje)
+   - [Krok 1 – instalacje zależności](#krok-1--instalacje-zależności)
+   - [Krok 2 – plik `.env`](#krok-1--plik-env)
+   - [Krok 3 – generowanie kluczy](#krok-2--generowanie-kluczy)
+   - [Krok 4 – uruchomienie Docker Compose](#krok-3--uruchomienie-docker-compose)
+7. [DAG Airflow – warehouse_daily](#dag-airflow--warehouse_daily)
+8. [Warstwa ML – trenowanie modeli i predykcje](#warstwa-ml--trenowanie-modeli-i-predykcje)
    - [Trenowanie i wybór najlepszego modelu](#trenowanie-i-wybór-najlepszego-modelu)
    - [Feature importance](#feature-importance)
    - [SHAP – interpretowalność modelu](#shap--interpretowalność-modelu)
    - [Predykcje nowych mieszkań](#predykcje-nowych-mieszkań)
-8. [Artefakty ML – co zostaje zapisane](#artefakty-ml--co-zostaje-zapisane)
-9. [Restart / zatrzymanie środowiska](#restart--zatrzymanie-środowiska)
+9. [Artefakty ML – co zostaje zapisane](#artefakty-ml--co-zostaje-zapisane)
+10. [Restart / zatrzymanie środowiska](#restart--zatrzymanie-środowiska)
 
 ---
 
@@ -249,7 +250,21 @@ flowchart TD
 	•	Python 3.10–3.12 (do lokalnego uruchamiania skryptów ML)
 	•	PostgreSQL lokalnie (jeśli chcesz podglądać dane poza kontenerem)
 
-### Krok 1 – plik .env
+### Krok 1 – instalacje zależności
+**Instalacja zależności Python (dla lokalnego uruchamiania ML)**
+
+W celu uruchomienia skryptów lokalnie, należy wykonać komende poniżej:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate        # macOS/Linux
+# lub
+.venv\Scripts\activate           # Windows
+
+pip install -r requirements.txt
+```
+
+
+### Krok 2 – plik .env
 
 W katalogu głównym projektu:
 ```bash
@@ -287,7 +302,7 @@ MINIO_ROOT_PASSWORD=admin12345
 S3_ENDPOINT=http://host.docker.internal:9000
 ```
 
-### Krok 2 – generowanie kluczy
+### Krok 3 – generowanie kluczy
 
 **Fernet Key:**
 ```bash
@@ -304,7 +319,7 @@ openssl rand -hex 64
 
 Wygenerowane wartości należy wkleić do airflow/.env.
 
-### Krok 3 - uruchomienie Docker Compose 
+### Krok 4 - uruchomienie Docker Compose 
 
 ```bash
 docker compose -f docker-compose.airflow.yml up -d
