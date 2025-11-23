@@ -357,7 +357,7 @@ Po włączeniu DAG-a warehouse_daily w UI Airflow, pipeline wykona kolejno:
 
 ## Warstwa ML – trenowanie modeli i predykcje
 
-**Trenowanie i wybór najlepszego modelu**
+### **Trenowanie i wybór najlepszego modelu**
 
 Skrypt: ml/ml_final.py
 
@@ -375,7 +375,7 @@ Wykonywane kroki:
 6.	Zapis pipeline’u do artifacts/best_model_<Model>.joblib
 7.	Wyliczenie SHA256 pipeline’u i zapis do ml.model_runs
 
-**Feature importance**
+### **Feature importance**
 
 Skrypt: ml/feature_importance.py
 - ładuje best_model_*.joblib z katalogu artifacts/
@@ -384,7 +384,7 @@ Skrypt: ml/feature_importance.py
 	- artifacts/feature_importance.csv
 	- artifacts/feature_importance_top20.png – wykres TOP 20 cech
 
-**SHAP – interpretowalność modelu**
+### **SHAP – interpretowalność modelu**
 
 Skrypt: ml/shap_explainer.py
 - pobiera próbkę danych z gold.housing_valid
@@ -393,7 +393,7 @@ Skrypt: ml/shap_explainer.py
 	- artifacts/shap_values.csv
 	- artifacts/shap_summary.png – wykres mean(|SHAP value|) dla top cech
 
-**Predykcje nowych mieszkań**
+### **Predykcje nowych mieszkań**
 
 Skrypt: ml/predict_sample.py
 1.	Pobiera N losowych rekordów z gold.housing_valid
