@@ -427,7 +427,7 @@ Przykładowe kolumny:
 
 ## Artefakty ML – co zostaje zapisane
 
-W katalogu artifacts/ powinieneś zobaczyć m.in.:
+W katalogu artifacts/ powinno być widoczne m.in.:
 **Modele i metryki:**
 - best_model_<Model>.joblib
 - model_metrics.csv
