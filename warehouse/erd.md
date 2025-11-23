@@ -50,8 +50,8 @@ B1 --> S1
 S1 --> S2
 S2 --> G1
 
-G1 -->|predict_sample.py| M1
-G1 -->|ml_final.py (training)| M2
+G1 --> M1
+G1 --> M2
 ```
 
 ## 📦 Warstwy hurtowni danych
