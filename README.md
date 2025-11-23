@@ -249,7 +249,7 @@ flowchart TD
 	•	Python 3.10–3.12 (do lokalnego uruchamiania skryptów ML)
 	•	PostgreSQL lokalnie (jeśli chcesz podglądać dane poza kontenerem)
 
-###Krok 1 – plik .env
+### Krok 1 – plik .env
 
 W katalogu głównym projektu:
 ```bash
