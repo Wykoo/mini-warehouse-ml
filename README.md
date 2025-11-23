@@ -304,7 +304,7 @@ openssl rand -hex 64
 
 Wygenerowane wartości należy wkleić do airflow/.env.
 
-### Krok 3 - uruchumienie Docker Compose 
+### Krok 3 - uruchomienie Docker Compose 
 
 ```bash
 docker compose -f docker-compose.airflow.yml up -d
