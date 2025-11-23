@@ -3,12 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-# Katalog z artefaktami
+
 ARTIFACTS_DIR = Path("artifacts")
-
-# Szukamy najlepszego modelu
 MODEL_PATH = next(ARTIFACTS_DIR.glob("best_model_*.joblib"), None)
-
 OUTPUT_CSV = ARTIFACTS_DIR / "feature_importance.csv"
 OUTPUT_PNG = ARTIFACTS_DIR / "feature_importance.png"
 

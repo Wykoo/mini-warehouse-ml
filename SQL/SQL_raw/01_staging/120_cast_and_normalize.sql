@@ -12,7 +12,6 @@ create or replace view silver.housing_clean as
          
     NULLIF(TRIM(postal_code), '')                        AS postal_code,
 
-    -- liczby całkowite
     rooms::int                                           AS rooms,
     floor::int                                           AS floor,
     total_floors::int                                    AS total_floors,

@@ -62,7 +62,6 @@ def main():
 
     print("Rysowanie wykresu (bar plot)...")
 
-    # Opcjonalnie: nazwy cech z preprocesora
     try:
         feature_names = pre.get_feature_names_out()
     except Exception:

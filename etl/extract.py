@@ -4,7 +4,6 @@ import os
 import pandas as pd
 from pathlib import Path
 
-# MinIO / S3 config (czyta też z .env jeśli ustawione)
 STORAGE = {
     "key": os.getenv("MINIO_ROOT_USER", "admin"),
     "secret": os.getenv("MINIO_ROOT_PASSWORD", "admin12345"),

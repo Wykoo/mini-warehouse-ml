@@ -18,7 +18,6 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
 from sklearn.model_selection import RandomizedSearchCV
 from xgboost import XGBRegressor
-import xgboost as xgb
 
 
 # 1.Konfiguracja
