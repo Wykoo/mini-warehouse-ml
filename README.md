@@ -434,3 +434,23 @@ Uruchomienie ponowne:
 ```bash
 docker compose -d docker-compose.airflow.yml up -d
 ```
+---
+
+## Autor
+
+Projekt został w całości zaprojektowany, zaimplementowany i udokumentowany przez:
+
+**Mateusz Wykowski**  
+Data Engineer & ML Enthusiast
+
+Repozytorium stanowi element portfolio i pokazuje praktyczną implementację:
+- end-to-end pipeline'u ETL w architekturze bronze → silver → gold,
+- orkiestracji z użyciem Apache Airflow,
+- integracji z MinIO (S3),
+- przetwarzania danych w Pythonie i SQL,
+- pełnego cyklu ML: preprocessing, trenowanie, ewaluacja, SHAP, predykcje,
+- oraz projektowych dobrych praktyk Data Engineering.
+
+Kontakt: **MateusWykowski@gmail.com**
+
+---
