@@ -34,6 +34,7 @@ Całość jest zaprojektowana jako **portfolio-quality project**.
 9. [Artefakty ML – co zostaje zapisane](#artefakty-ml--co-zostaje-zapisane)
 10. [Wizualizacje projektu](#wizualizacje-projektu)
 11. [Restart / zatrzymanie środowiska](#restart--zatrzymanie-środowiska)
+12. [Autor](#autor)
 
 ---
 
