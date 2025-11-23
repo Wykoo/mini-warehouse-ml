@@ -89,18 +89,18 @@ Zawiera zarówno tabele obliczeniowe, jak i widoki, które łączą wszystkie el
 
 ### Tabele
 
-  •	gold.housing_features
+- gold.housing_features
 → pełny zestaw cech numerycznych i kategorycznych dla ML
-	•	gold.outliers_iqr
+- gold.outliers_iqr
 → obliczenia statystyczne IQR, wykorzystywane do walidacji outlierów
-	•	gold.price_city_daily
+- gold.price_city_daily
 → dzienne agregacje cen dla miast (analiza trendów)
 
 ### Views
 
-  •	gold.clean
+- gold.clean
 → widok z oczyszczonymi i połączonymi danymi z warstwy silver + cechy z gold
-	•	gold.housing_valid
+- old.housing_valid
 → finalny zbiór treningowy
 → wykorzystywany w ml_final.py i predict_sample.py
 
@@ -111,11 +111,11 @@ ml.housing_predictions
 Tabela z wynikami predykcji wygenerowanymi przez model ML z pipeline’u:
 
 Zawiera kolumny:
-	•	listing_id
-	•	predicted_price_total
-	•	scored_at
-	•	model_path
-	•	diff_real_vs_pred 
+	- listing_id
+	- predicted_price_total
+	- scored_at
+	- model_path
+	- diff_real_vs_pred 
 
 Tworzone przez skrypt:
 
@@ -128,12 +128,12 @@ ml.model_runs
 Logi każdego treningu modelu:
 
 Zawiera:
-	•	run_id
-	•	model_name
-	•	mae, rmse, r2
-	•	train_rows, valid_rows
-	•	scored_at
-	•	pipeline_sha (hash modelu — kontrola wersji)
+	- run_id
+	- model_name
+	- mae, rmse, r2
+	- train_rows, valid_rows
+	- scored_at
+	- pipeline_sha (hash modelu — kontrola wersji)
 
 Tworzone przez skrypt:
 
