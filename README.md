@@ -32,7 +32,7 @@ Całość jest zaprojektowana jako **portfolio-quality project**.
    - [SHAP – interpretowalność modelu](#shap--interpretowalność-modelu)
    - [Predykcje nowych mieszkań](#predykcje-nowych-mieszkań)
 9. [Artefakty ML – co zostaje zapisane](#artefakty-ml--co-zostaje-zapisane)
-10. [Wizualizacje projektu](#-wizualizacje-projektu)
+10. [Wizualizacje projektu](#wizualizacje-projektu)
 11. [Restart / zatrzymanie środowiska](#restart--zatrzymanie-środowiska)
 
 ---
