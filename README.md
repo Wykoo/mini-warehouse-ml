@@ -16,22 +16,22 @@ Całość jest zaprojektowana jako **portfolio-quality project**.
 
 ## Spis treści
 
-1. [Architektura](#-architektura)
-2. [Struktura repozytorium](#-struktura-repozytorium)
-3. [Warstwy hurtowni danych](#-warstwy-hurtowni-danych)
-4. [ERD – zależności między tabelami (Mermaid)](#-erd--zależności-między-tabelami-mermaid)
-5. [Setup – środowisko lokalne](#-setup--środowisko-lokalne)
+1. [Architektura](#architektura)
+2. [Struktura repozytorium](#struktura-repozytorium)
+3. [Warstwy hurtowni danych](#warstwy-hurtowni-danych)
+4. [ERD – zależności między tabelami (Mermaid)](#erd--zależności-między-tabelami-mermaid)
+5. [Setup – środowisko lokalne](#setup--środowisko-lokalne)
    - [Krok 1 – plik `.env`](#krok-1--plik-env)
    - [Krok 2 – generowanie kluczy](#krok-2--generowanie-kluczy)
    - [Krok 3 – uruchomienie Docker Compose](#krok-3--uruchomienie-docker-compose)
-6. [DAG Airflow – `warehouse_daily`](#-dag-airflow--warehouse_daily)
-7. [Warstwa ML – trenowanie modeli i predykcje](#-warstwa-ml--trenowanie-modeli-i-predykcje)
+6. [DAG Airflow – warehouse_daily](#dag-airflow--warehouse_daily)
+7. [Warstwa ML – trenowanie modeli i predykcje](#warstwa-ml--trenowanie-modeli-i-predykcje)
    - [Trenowanie i wybór najlepszego modelu](#trenowanie-i-wybór-najlepszego-modelu)
    - [Feature importance](#feature-importance)
    - [SHAP – interpretowalność modelu](#shap--interpretowalność-modelu)
    - [Predykcje nowych mieszkań](#predykcje-nowych-mieszkań)
-8. [Artefakty ML – co zostaje zapisane](#-artefakty-ml--co-zostaje-zapisane)
-9. [Restart / zatrzymanie środowiska](#-restart--zatrzymanie-środowiska)
+8. [Artefakty ML – co zostaje zapisane](#artefakty-ml--co-zostaje-zapisane)
+9. [Restart / zatrzymanie środowiska](#restart--zatrzymanie-środowiska)
 
 ---
 
