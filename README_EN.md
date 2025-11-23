@@ -27,7 +27,7 @@ Designed as a **portfolio-quality project**.
    - [Step 4 – Run Docker Compose](#step-4--run-docker-compose)
 6. [Airflow DAG – warehouse_daily](#airflow-dag--warehouse_daily)
 7. [ML Layer – Model Training & Predictions](#ml-layer--model-training--predictions)
-   - [Training and model selection](#training-and-model-selection)
+   - [Training and Selecting the Best Model](#training-and-selecting-the-best-model)
    - [Feature importance](#feature-importance)
    - [SHAP analysis](#shap-analysis)
    - [Predictions](#predictions)
