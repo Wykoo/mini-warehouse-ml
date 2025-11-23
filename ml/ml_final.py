@@ -242,11 +242,11 @@ def train_and_evaluate():
     run_row.to_sql(
         "model_runs",
         engine,
-        schema="gold",
+        schema="ml",
         if_exists="append",
         index=False
     )
-    print("Zapisano metadane runu do gold.model_runs")
+    print("Zapisano metadane runu do ml.model_runs")
 
 if __name__ == "__main__":
     train_and_evaluate()

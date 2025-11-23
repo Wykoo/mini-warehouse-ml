@@ -1,0 +1,37 @@
+[2025-11-23T08:02:50.895+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-11-23T08:02:50.904+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-22T06:00:00+00:00 [queued]>
+[2025-11-23T08:02:50.906+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-22T06:00:00+00:00 [queued]>
+[2025-11-23T08:02:50.906+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-11-23T08:02:50.910+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): Model_prediction_sample> on 2025-11-22 06:00:00+00:00
+[2025-11-23T08:02:50.912+0000] {standard_task_runner.py:64} INFO - Started process 3117 to run task
+[2025-11-23T08:02:50.913+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'warehouse_daily', 'Model_prediction_sample', 'scheduled__2025-11-22T06:00:00+00:00', '--job-id', '49', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_dag.py', '--cfg-path', '/tmp/tmpo8l4x6dz']
+[2025-11-23T08:02:50.914+0000] {standard_task_runner.py:91} INFO - Job 49: Subtask Model_prediction_sample
+[2025-11-23T08:02:50.927+0000] {task_command.py:426} INFO - Running <TaskInstance: warehouse_daily.Model_prediction_sample scheduled__2025-11-22T06:00:00+00:00 [running]> on host e41cc4788735
+[2025-11-23T08:02:51.004+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='wyko' AIRFLOW_CTX_DAG_ID='warehouse_daily' AIRFLOW_CTX_TASK_ID='Model_prediction_sample' AIRFLOW_CTX_EXECUTION_DATE='2025-11-22T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-11-22T06:00:00+00:00'
+[2025-11-23T08:02:51.004+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-11-23T08:02:51.011+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-11-23T08:02:51.011+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/airflow/repo && python ml/predict_sample.py']
+[2025-11-23T08:02:51.014+0000] {subprocess.py:86} INFO - Output:
+[2025-11-23T08:02:52.061+0000] {subprocess.py:93} INFO - /opt/airflow/repo/ml/predict_sample.py:97: DeprecationWarning: is_datetime64tz_dtype is deprecated and will be removed in a future version. Check `isinstance(dtype, pd.DatetimeTZDtype)` instead.
+[2025-11-23T08:02:52.061+0000] {subprocess.py:93} INFO -   if pd.api.types.is_datetime64tz_dtype(report_excel["scored_at"]):
+[2025-11-23T08:02:52.125+0000] {subprocess.py:93} INFO - Ładowanie modelu z: artifacts/best_model_RandomForest.joblib
+[2025-11-23T08:02:52.126+0000] {subprocess.py:93} INFO - Pobieranie mieszkań do wyceny...
+[2025-11-23T08:02:52.126+0000] {subprocess.py:93} INFO - Liczenie predykcji...
+[2025-11-23T08:02:52.126+0000] {subprocess.py:93} INFO - Zapisywanie predykcji do bazy...
+[2025-11-23T08:02:52.126+0000] {subprocess.py:93} INFO - Zapisano 10 predykcji gold.housing_predictions
+[2025-11-23T08:02:52.127+0000] {subprocess.py:93} INFO - Zapisano raport do Excela → artifacts/predictions_20251123_0802.xlsx
+[2025-11-23T08:02:52.127+0000] {subprocess.py:93} INFO - Podgląd 5 wierszy:
+[2025-11-23T08:02:52.127+0000] {subprocess.py:93} INFO -    listing_id listing_date  ...         diff  diff_pct
+[2025-11-23T08:02:52.127+0000] {subprocess.py:93} INFO - 0      494766   2024-03-13  ... -2165.614912     -0.40
+[2025-11-23T08:02:52.127+0000] {subprocess.py:93} INFO - 1      771600   2024-04-05  ...    35.219750      0.01
+[2025-11-23T08:02:52.127+0000] {subprocess.py:93} INFO - 2      470631   2024-07-16  ...  2272.885926      0.20
+[2025-11-23T08:02:52.128+0000] {subprocess.py:93} INFO - 3      407420   2025-01-27  ...  -880.184103     -0.19
+[2025-11-23T08:02:52.128+0000] {subprocess.py:93} INFO - 4      648072   2024-03-01  ... -2194.242730     -0.37
+[2025-11-23T08:02:52.129+0000] {subprocess.py:93} INFO - 
+[2025-11-23T08:02:52.129+0000] {subprocess.py:93} INFO - [5 rows x 30 columns]
+[2025-11-23T08:02:52.208+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-11-23T08:02:52.209+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-11-23T08:02:52.215+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=warehouse_daily, task_id=Model_prediction_sample, run_id=scheduled__2025-11-22T06:00:00+00:00, execution_date=20251122T060000, start_date=20251123T080250, end_date=20251123T080252
+[2025-11-23T08:02:52.231+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2025-11-23T08:02:52.236+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-23T08:02:52.236+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

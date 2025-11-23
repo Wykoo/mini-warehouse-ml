@@ -15,7 +15,7 @@ MODEL_PATH = next(ARTIFACTS_DIR.glob("best_model_*.joblib"))
 
 TARGET_COL = "price_total"
 SOURCE_TABLE = "gold.housing_valid"  
-PRED_SCHEMA = "gold"
+PRED_SCHEMA = "ml"
 PRED_TABLE = "housing_predictions"    
 
 PG_URL = (
