@@ -15,59 +15,43 @@ wraz z przepływem danych, walidacją, trenowaniem modeli i generowaniem predykc
 ```mermaid
 flowchart TD
 
-    %% --- BRONZE ---
-    subgraph BRONZE ["Bronze Layer – Raw Data"]
-        B1["bronze.raw_listings"]
-        B2["bronze.raw_agents"]
-        B3["bronze.raw_locations"]
-    end
+%% =======================
+%%      BRONZE
+%% =======================
+subgraph BRONZE ["Bronze Layer – Raw Data"]
+    B1["bronze.housing_raw"]
+end
 
-    %% --- SILVER ---
-    subgraph SILVER ["Silver Layer – Cleaned & Standardized"]
-        S1["silver.listings_clean"]
-        S2["silver.agents_clean"]
-        S3["silver.locations_clean"]
-        S4["silver.listings_enriched"]
-    end
+%% =======================
+%%      SILVER
+%% =======================
+subgraph SILVER ["Silver Layer – Clean & Typed"]
+    S1["silver.housing_clean"]
+    S2["silver.housing_typed"]
+end
 
-    %% --- GOLD ---
-    subgraph GOLD ["Gold Layer – Analytics-Ready"]
-        G1["gold.housing_base"]
-        G2["gold.housing_features"]
-        G3["gold.housing_valid"]
-    end
+%% =======================
+%%      GOLD
+%% =======================
+subgraph GOLD ["Gold Layer – Final ML Dataset"]
+    G1["gold.housing_valid"]
+end
 
-    %% --- ML ---
-    subgraph ML ["ML Layer – Predictions & Metadata"]
-        M1["ml.housing_predictions"]
-        M2["ml.model_runs"]
-    end
+%% =======================
+%%      ML
+%% =======================
+subgraph ML ["ML Layer – Predictions & Metadata"]
+    M1["ml.housing_predictions"]
+    M2["ml.model_runs"]
+end
 
-    %% ---------------- FLOWS ----------------
+%% FLOWS
+B1 --> S1
+S1 --> S2
+S2 --> G1
 
-    %% Bronze → Silver
-    B1 --> S1
-    B2 --> S2
-    B3 --> S3
-
-    %% Enrichment
-    S1 --> S4
-    S3 --> S4
-
-    %% Silver → Gold
-    S4 --> G1
-    G1 --> G2
-    G2 --> G3
-
-    %% Gold → ML
-    G3 -->|"predict_sample.py"| M1
-
-    %% Model metadata (trening)
-    G3 -->|"ml_final.py (training run logs)"| M2
-
-    %% Relationships pomocnicze
-    S2 -.-> S4
-    B2 -.-> S2
+G1 -->|predict_sample.py| M1
+G1 -->|ml_final.py (training)| M2
 ```
 
 ## 📦 Warstwy hurtowni danych
